@@ -1,0 +1,32 @@
+name: Check IPs
+
+on:
+  workflow_dispatch:  # Menjalankan secara manual dari GitHub Actions
+
+jobs:
+  check_ips:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run IP Checker
+        run: |
+          python check_ip.py
+
+      - name: Upload results
+        uses: actions/upload-artifact@v3
+        with:
+          name: ip-check-results
+          path: |
+            out.txt
+            dead.txt
