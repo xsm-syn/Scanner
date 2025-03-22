@@ -1,7 +1,9 @@
 name: Check IPs
 
 on:
-  workflow_dispatch:  # Workflow harus dijalankan secara manual
+  schedule:
+    - cron: "*/10 * * * *"  # Jalankan setiap 10 menit
+  workflow_dispatch:  # Bisa dijalankan manual juga
 
 jobs:
   check-ips:
