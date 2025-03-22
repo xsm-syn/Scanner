@@ -20,24 +20,24 @@ def check_ip(line):
 
             print(f"✅ Saved: {ip}:{port} -> {country_code}, {org_cleaned}, {delay}")
             
-            with open("out.txt", "a") as success_file:
+            with open("proxyList.txt", "a") as success_file:
                 success_file.write(f"{ip},{port},{country_code},{org_cleaned},{delay}\n")
         else:
             print(f"❌ Tidak memenuhi kondisi proxyip true: {ip}:{port}")
-            with open("dead.txt", "a") as failed_file:
+            with open("deadIp.txt", "a") as failed_file:
                 failed_file.write(f"{ip},{port}\n")
                 
     except Exception as e:
         print(f"❌ Gagal: {ip}:{port} -> {e}")
-        with open("dead.txt", "a") as failed_file:
+        with open("deadIp.txt", "a") as failed_file:
             failed_file.write(f"{ip},{port}\n")
 
 # Baca IP dari raw.txt
 with open("raw.txt", "r") as f:
     lines = [line.strip() for line in f.readlines()]
 
-open("out.txt", "w").close()
-open("dead.txt", "w").close()
+open("proxyList.txt", "w").close()
+open("deadIp.txt", "w").close()
 
 with ThreadPoolExecutor(max_workers=100) as executor:
     executor.map(check_ip, lines)
